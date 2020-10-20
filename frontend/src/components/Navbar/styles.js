@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 export const Wrapper = styled.div`
   display: flex;
   justify-content: center;
+  border-bottom: 1px solid gray;
 `;
 
 export const Link = styled(NavLink)`
@@ -12,5 +13,6 @@ export const Link = styled(NavLink)`
   :hover,
   &.active {
     background: gray;
+    color: white;
   }
 `;
