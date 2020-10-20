@@ -1,4 +1,4 @@
-import dotenv from 'dotenv';
+const dotenv = require('dotenv');
 
 let path;
 switch (process.env.NODE_ENV) {
@@ -17,6 +17,8 @@ dotenv.config({
   path,
 });
 
-export const dbUser = process.env.DB_USER;
-export const dbPassword = process.env.DB_PASSWORD;
-export const dbName = process.env.DB_NAME;
+module.exports = {
+  dbUser: process.env.DB_USER,
+  dbPassword: process.env.DB_PASSWORD,
+  dbName: process.env.DB_NAME,
+};
