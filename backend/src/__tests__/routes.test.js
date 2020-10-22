@@ -95,25 +95,25 @@ describe('Routes', () => {
       done();
     });
 
-    // it('returns a comment with success', async (done) => {
-    //   const post = await Post.create({ message: 'Message sample' });
-    //   const comment = await Comment.create({
-    //     comment: 'Comment sample',
-    //     post: post._id,
-    //   });
-    //   await post.comments.push(comment);
-    //   await post.save();
-    //   const res = await request(app).get(`/api/posts/:${post._id}/comments`);
-    //   expect(res.statusCode).toEqual(200);
-    //   done();
-    // });
+    it('returns a comment with success', async (done) => {
+      const post = await Post.create({ message: 'Message sample' });
+      const comment = await Comment.create({
+        comment: 'Comment sample',
+        post: post._id,
+      });
+      await post.comments.push(comment);
+      await post.save();
+      const res = await request(app).get(`/api/posts/${post._id}/comments`);
+      expect(res.statusCode).toEqual(201);
+      done();
+    });
   });
 
   describe('POST /api/posts/:id/comments', () => {
     it('returns a 201 create success code', async (done) => {
       const post = await Post.create({ message: 'Message sample' });
       const res = await request(app)
-        .post(`/api/posts/:${post._id}/comments`)
+        .post(`/api/posts/${post._id}/comments`)
         .send({ comment: 'Comment sample' });
       console.log(res.body);
       expect(res.statusCode).toEqual(201);
