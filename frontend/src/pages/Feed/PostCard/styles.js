@@ -6,7 +6,7 @@ import { BiMessageAltDetail } from 'react-icons/bi';
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  border: 1px solid black;
+  border: 1px solid ${(props) => props.theme.color.dark};
   width: 500px;
   margin-bottom: 20px;
   padding: 10px;
@@ -20,9 +20,13 @@ export const Wrapper = styled.div`
 export const Message = styled(Link)`
   flex: 1;
   cursor: pointer;
-  color: black;
+  color: ${(props) => props.theme.color.dark};
   font-size: 1.2em;
   margin-bottom: 5px;
+  transition: 0.2s;
+  :hover {
+    background: ${(props) => props.theme.color.light};
+  }
 `;
 
 export const OptionBar = styled.div`

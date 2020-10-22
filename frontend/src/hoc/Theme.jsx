@@ -4,13 +4,11 @@ import { ThemeProvider } from 'styled-components';
 
 const theme = {
   color: {
-    primary: '#212121',
-    secondary: '#757575',
-  },
-  fontColor: {
+    primary: '#303F9F',
+    secondary: '#D32F2F',
     dark: '#212121',
-    light: '#757575',
-    white: '#DCEDC8',
+    light: '#ddd',
+    white: '#fff',
   },
   fontSize: {
     small: '0.8em',

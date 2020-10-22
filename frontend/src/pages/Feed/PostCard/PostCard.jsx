@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   Wrapper,
   Message,
@@ -9,7 +10,7 @@ import {
   MessageText,
 } from './styles';
 
-function PostCard({ message, _id, handleDelete }) {
+function PostCard({ message, _id, handleDelete, comments }) {
   const clipedMessage =
     message.length < 100
       ? message
@@ -22,11 +23,25 @@ function PostCard({ message, _id, handleDelete }) {
         <DeleteIcon onClick={() => handleDelete(_id)} />
         <MessageInfo>
           <MessagesIcon />
-          <MessageText>50</MessageText>
+          <MessageText>{comments}</MessageText>
         </MessageInfo>
       </OptionBar>
     </Wrapper>
   );
 }
+
+PostCard.propTypes = {
+  message: PropTypes.string,
+  _id: PropTypes.number,
+  handleDelete: PropTypes.func,
+  comments: PropTypes.string,
+};
+
+PostCard.defaultProps = {
+  message: '',
+  _id: 0,
+  handleDelete: null,
+  comments: '',
+};
 
 export default PostCard;

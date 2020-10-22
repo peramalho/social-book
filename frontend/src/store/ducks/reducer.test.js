@@ -10,16 +10,6 @@ describe('Reducer', () => {
     expect(newState).toEqual({});
   });
 
-  it('handles actions with CREATE_POST type', () => {
-    const action = {
-      type: Types.CREATE_POST,
-      payload: 'message',
-    };
-
-    const newState = reducer({ posts: [] }, action);
-    expect(newState.posts[0]).toEqual('message');
-  });
-
   it('handles actions with DELETE_POST type', () => {
     const action = {
       type: Types.DELETE_POST,
@@ -42,5 +32,40 @@ describe('Reducer', () => {
 
     const newState = reducer({ posts: [] }, action);
     expect(newState.posts).toEqual(posts);
+  });
+
+  it('handles actions with FETCH_COMMENTS type', () => {
+    const comments = [
+      { comment: '123', _id: '123' },
+      { comment: '456', _id: '456' },
+    ];
+    const action = {
+      type: Types.FETCH_COMMENTS,
+      payload: comments,
+    };
+
+    const newState = reducer({ comments: [] }, action);
+    expect(newState.comments).toEqual(comments);
+  });
+
+  it('handles actions with ADD_COMMENT type', () => {
+    const comment = '123';
+    const action = {
+      type: Types.ADD_COMMENT,
+      payload: comment,
+    };
+
+    const newState = reducer({ comments: [] }, action);
+    expect(newState.comments).toEqual([comment]);
+  });
+
+  it('handles actions with SET_LOADING type', () => {
+    const action = {
+      type: Types.SET_LOADING,
+      payload: true,
+    };
+
+    const newState = reducer({ isLoading: false }, action);
+    expect(newState.isLoading).toEqual(true);
   });
 });

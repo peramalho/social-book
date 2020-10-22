@@ -1,14 +1,12 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 import { Form, Title, TextArea, Error, Button } from './styles';
 import { PageWrapper } from '../../components/styles';
-import { addPost } from '../../store/ducks/reducer';
 
 function NewPost() {
-  const dispatch = useDispatch();
   const history = useHistory();
   const formik = useFormik({
     initialValues: {
@@ -19,8 +17,12 @@ function NewPost() {
         .max(280, 'Máximo de 280 caracteres.')
         .required('Required!'),
     }),
-    onSubmit: (values) => {
-      dispatch(addPost(values));
+    onSubmit: async (values) => {
+      try {
+        await axios.post(`${process.env.REACT_APP_BACKEND_URL}/posts`, values);
+      } catch (err) {
+        console.log(err);
+      }
       history.push('/');
     },
   });
