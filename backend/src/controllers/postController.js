@@ -16,7 +16,7 @@ const getPosts = async (req, res, next) => {
 
 const getPostById = async (req, res, next) => {
   try {
-    const post = await Post.findById(req.id);
+    const post = await Post.findById(req.params.id);
     if (!post) {
       const error = new HttpError('Post não encontrado', 404);
       next(error);
@@ -44,4 +44,17 @@ const createPost = async (req, res, next) => {
   }
 };
 
-module.exports = { getPosts, getPostById, createPost };
+const deletePost = async (req, res, next) => {
+  try {
+    await Post.findByIdAndDelete(req.params.id);
+    res.status(200).json({ message: 'Post deleted' });
+  } catch (err) {
+    const error = new HttpError(
+      'Something wrong. Could not delete the post',
+      500
+    );
+    next(error);
+  }
+};
+
+module.exports = { getPosts, getPostById, createPost, deletePost };

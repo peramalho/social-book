@@ -1,4 +1,5 @@
 const request = require('supertest');
+const mongoose = require('mongoose');
 const app = require('../app');
 const Post = require('../models/post');
 const Comment = require('../models/comment');
@@ -34,9 +35,20 @@ describe('Routes', () => {
 
   describe('GET /posts/:id', () => {
     it('returns a 404 error code if post does not exist', async (done) => {
-      const id = 123456789;
+      const id = mongoose.Types.ObjectId();
       const res = await request(app).get(`/api/posts/${id}`);
       expect(res.statusCode).toEqual(404);
+      done();
+    });
+
+    it('returns a success code if post exists', async (done) => {
+      const newPost = { message: 'Message sample' };
+      const post = await Post.create(newPost);
+      // eslint-disable-next-line no-underscore-dangle
+      const id = post._id;
+
+      const res = await request(app).get(`/api/posts/${id}`);
+      expect(res.statusCode).toEqual(200);
       done();
     });
   });
