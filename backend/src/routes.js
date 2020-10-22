@@ -11,6 +11,5 @@ router.delete('/api/posts/:id', postController.deletePost);
 
 router.get('/api/posts/:id/comments', commentController.getComments);
 router.post('/api/posts/:id/comments', commentController.createComment);
-router.delete('/api/posts/:id/comments', commentController.deleteComment);
 
 module.exports = router;

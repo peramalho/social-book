@@ -1,4 +1,5 @@
 const Post = require('../models/post');
+const Comment = require('../models/comment');
 const HttpError = require('../models/http-error');
 
 const getPosts = async (req, res, next) => {
@@ -16,7 +17,7 @@ const getPosts = async (req, res, next) => {
 
 const getPostById = async (req, res, next) => {
   try {
-    const post = await Post.findById(req.params.id);
+    const post = await Post.findById(req.params.id).populate('comments');
     if (!post) {
       const error = new HttpError('Post não encontrado', 404);
       next(error);
@@ -27,6 +28,7 @@ const getPostById = async (req, res, next) => {
       'Something wrong. Could not fetch the related post',
       500
     );
+    console.log(err);
     next(error);
   }
 };
@@ -47,7 +49,8 @@ const createPost = async (req, res, next) => {
 const deletePost = async (req, res, next) => {
   try {
     await Post.findByIdAndDelete(req.params.id);
-    res.status(200).json({ message: 'Post deleted' });
+    await Comment.deleteMany({ post: req.params.id });
+    await res.status(200).json({ message: 'Post deleted' });
   } catch (err) {
     const error = new HttpError(
       'Something wrong. Could not delete the post',

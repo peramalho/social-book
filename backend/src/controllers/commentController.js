@@ -4,6 +4,7 @@ const HttpError = require('../models/http-error');
 
 const createComment = async (req, res, next) => {
   try {
+    console.log(req.body.comment);
     const comment = await Comment.create({
       comment: req.body.comment,
       post: req.params.id,
@@ -24,7 +25,9 @@ const createComment = async (req, res, next) => {
 
 const getComments = async (req, res, next) => {
   try {
-    const comments = await Comment.find({ post: req.body.id });
+    console.log(req.params.id);
+    const comments = await Comment.find({ post: req.params.id });
+    console.log(comments);
     res.status(201).json(comments);
   } catch (err) {
     const error = new HttpError(
@@ -35,17 +38,4 @@ const getComments = async (req, res, next) => {
   }
 };
 
-const deleteComment = async (req, res, next) => {
-  try {
-    await Comment.findByIdAndDelete(req.params.id);
-    res.status(200).json({ comment: 'Comment deleted' });
-  } catch (err) {
-    const error = new HttpError(
-      'Something wrong. Could not delete the comment',
-      500
-    );
-    next(error);
-  }
-};
-
-module.exports = { createComment, getComments, deleteComment };
+module.exports = { createComment, getComments };
